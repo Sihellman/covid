@@ -1,13 +1,18 @@
 package com.example.covid.controller;
 
+import com.example.covid.model.KeyValue;
 import com.example.covid.service.CovidService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Key;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 @AllArgsConstructor
 
 
@@ -16,11 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class CovidController {
 
     private final CovidService covidService;
+    
+    @PostMapping("/date")
+    public String getQuarantineTime(@RequestBody KeyValue keyValue) {
 
+        return covidService.getQuarantineTime(keyValue.getYear(), keyValue.getMonth(), keyValue.getDay());
 
-    @GetMapping("/date/{year}/{month}/{day}")
-    public String getQuarantineTime(@PathVariable int year, @PathVariable int month, @PathVariable int day){
-        return covidService.getQuarantineTime(year, month, day);
 
     }
+
+
+    @GetMapping("/time")
+    public String getTime(){
+        return CovidService.getTime();
+    }
+
+
 }
